@@ -14,6 +14,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/ ${CMAKE_MODULE_PATH})
 project(CBB)
 
 include(CheckEnvironment)
+include(GitHooks)
 include(PackageVersion)
 
 PackageVersion(CBB 0 1 0)
