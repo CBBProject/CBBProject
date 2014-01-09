@@ -6,3 +6,5 @@ if [ -z "$GIT_DIR" ]; then
 fi
 
 echo "::$GIT_DIR::"
+
+git clone git@dtk.inria.fr:dtk/dtk.git
