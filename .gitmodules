@@ -1,0 +1,3 @@
+[submodule "dtk"]
+	path = dtk
+	url = git@dtk.inria.fr:dtk/dtk.git
