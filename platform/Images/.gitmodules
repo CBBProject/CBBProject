@@ -1,3 +1,0 @@
-[submodule "cmake"]
-	path = cmake
-	url = ssh://srv-athena.inria.fr/proj/athena/private/Git/Odyssee++/cmake.git
