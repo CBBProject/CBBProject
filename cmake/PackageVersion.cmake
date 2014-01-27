@@ -1,7 +1,3 @@
-#  Normally one should add this here, but cmake keeps warning about
-#  multiple inclusion
-#  include(CPack)
-
 macro(PackageVersion Package Major Minor Patch)
 
     if (NOT CPACK_RPM_USER_BINARY_SPECFILE)
