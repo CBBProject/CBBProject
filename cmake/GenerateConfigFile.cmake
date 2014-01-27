@@ -106,9 +106,9 @@ function(GenerateConfigFile ConfigName)
     set(PLUGINS_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/${PLUGINS_INCLUDE_DIRS}")
     set(CONFIG_DIR           "${CMAKE_CURRENT_BINARY_DIR}")
 
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XXXConfig.cmake.in
+    configure_file(${CMAKE_SOURCE_DIR}/cmake/XXXConfig.cmake.in
                    "${PROJECT_BINARY_DIR}/${ConfigName}Config.cmake" @ONLY)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XXXConfigVersion.cmake.in
+    configure_file(${CMAKE_SOURCE_DIR}/cmake/XXXConfigVersion.cmake.in
                    "${PROJECT_BINARY_DIR}/${ConfigName}ConfigVersion.cmake" @ONLY)
  
     #   Install the export set for use with the install-tree
@@ -122,9 +122,9 @@ function(GenerateConfigFile ConfigName)
     set(PLUGINS_INCLUDE_DIRS "${INSTALL_INCLUDE_DIR}/${ConfigName}/${PLUGINS_INCLUDE_DIRS_ORIG}")
     set(CONFIG_DIR           "${INSTALL_DATA_DIR}/${ConfigName}-Odyssee++/CMake")
 
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XXXConfig.cmake.in
+    configure_file(${CMAKE_SOURCE_DIR}/cmake/XXXConfig.cmake.in
                    "${CMAKE_CURRENT_BINARY_DIR}/InstallFiles/${ConfigName}Config.cmake" @ONLY)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/XXXConfigVersion.cmake.in
+    configure_file(${CMAKE_SOURCE_DIR}/cmake/XXXConfigVersion.cmake.in
                    "${CMAKE_CURRENT_BINARY_DIR}/InstallFiles/${ConfigName}ConfigVersion.cmake" @ONLY)
     install(FILES
             "${CMAKE_CURRENT_BINARY_DIR}/InstallFiles/${ConfigName}Config.cmake"
