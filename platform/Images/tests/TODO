@@ -1,0 +1,10 @@
+Repare BilinearInterpolation2D
+
+Add something to deal with image formats that are architecture dependent...
+First idea, finish GenericCheck by making it autoconfed, but this may not
+be sufficient. Second idea, extend the example syntax (maybe not even
+necessary since this can be done for files containing the suffix for the
+images that are affected) to replace the crude comparison by a more flexible
+one. Maybe both ideas should be implemented...
+
+Autoconfigure GenericCheck, in particular the srcdir.

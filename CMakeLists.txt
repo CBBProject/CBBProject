@@ -18,4 +18,12 @@ include(PackageVersion)
 
 PackageVersion(CBB 0 1 0)
 
-subdirs(dtk)
+set(dtk_DIR ${CMAKE_CURRENT_BINARY_DIR}/dtk)
+
+foreach(i Utils Maths Images)
+    include_directories(platform/${i}/include)
+    include_directories(${CMAKE_CURRENT_BINARY_DIR}/platform/${i}/include)
+endforeach()
+include_directories(platform/interface)
+
+subdirs(dtk platform plugins)

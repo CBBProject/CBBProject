@@ -1,0 +1,98 @@
+#!/bin/sh
+
+PATH=/usr/xpg4/bin:$PATH
+
+srcdir=`dirname $0`
+echo ${srcdir}
+
+program=`basename $1`
+examples=`grep "^//[ \t]*Example:[ \t]*./${program}" ${srcdir}/${program}.C | \
+          sed -e"s|^//[ \t]*Example:[ \t]*\(.*\)$|\1|" | \
+          sed -e"s|images/|${srcdir}/&|g" | \
+          sed -e"s|results/|${srcdir}/&|g"`
+
+arch=le
+opp_arch=be
+
+compare() {
+    if [ -x ./Compare ]; then
+        out=`./Compare $1 $2 2>&1 > /dev/null`
+        [ "$out" == "Min: 0 Max: 0" ]
+    fi
+}
+
+IFS=$'\n'
+status=0
+ulimit -t 10
+for i in ${examples:=./${program}}; do
+    IFS=$' \t\n'
+    echo "$i" | grep -q -s '###'
+    spec_compare=$?
+    if [ $spec_compare = 0 ]; then
+        COMPARE=compare
+        i=`echo $i | sed -e"s|###|##|"`
+    else
+        COMPARE=cmp
+    fi
+
+    echo "$i" | grep -q -s '>'
+    spec_outfile=$?
+    if [ $spec_outfile = 0 ]; then
+        command=`echo $i | sed -e"s|\(.*\)>.*|\1|"`
+        outfile=`echo $i | sed -e"s|.*>[ \t]*||"`
+    else
+        command=$i
+        outfile=${program}.output
+    fi
+
+    echo "$i" | grep -q -s '##'
+    spec_result=$?
+    if [ $spec_result = 0 ]; then
+        command=`echo $command | sed -e"s|\(.*\)##.*|\1|"`
+        outfile1=`echo $outfile | sed -e"s|\(.*\)##.*|\1|" | sed -e"s| *$||"`
+        if [ "x$outfile1" != "x" ]; then
+           outfile=$outfile1
+        fi
+        results=`echo $i | sed -e"s|.*##[ \t]*||"`
+        if [ "x$results" == "x" ]; then
+            results=${srcdir}/results/${outfile}
+        fi
+    else
+        command=$i
+        results=${srcdir}/results/${outfile}
+    fi
+    for var in command outfile results; do
+        eval ${var}=`echo \'${!var}\' | sed -e"s|%arch|$arch|"`
+        eval ${var}=`echo \'${!var}\' | sed -e"s|%!arch|$opp_arch|"`
+    done
+
+    echo "Command: $command 1> $outfile" 
+    eval $command 1> ${outfile} 2>&1
+
+    if [ $spec_outfile != 0 ]; then
+        result=`echo $results | sed -e"s|^ *\([^ ]*\) .*|\1|"`
+        results=`echo $results | sed -e"s|^ *[^ ]* *||"`
+        if [ "$result" == Null.output ]; then
+            [ `ls -l ${outfile} | awk '{ print $5 }'` == 0 ]
+        else
+            echo ${COMPARE} ${outfile} $result
+            ${COMPARE} ${outfile} $result
+        fi
+        error=$?
+        if [ $error = 0 ]; then \rm ${outfile}; fi
+        ((status= error + status))
+    fi
+
+    if [ $spec_result = 0 ]; then
+        for result in $results; do
+            outfile=`echo $result | sed -e"s|${srcdir}/results/||" | sed -e"s|${srcdir}/images/||"`
+            echo ${COMPARE} ${outfile} $result
+            ${COMPARE} ${outfile} ${result}
+            error=$?
+            if [ $error = 0 ]; then \rm ${outfile}; fi
+            ((status= error + status))
+        done
+    fi
+done;
+
+exit $status;

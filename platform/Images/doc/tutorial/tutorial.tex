@@ -1,0 +1,449 @@
+\documentclass[a4paper]{report}
+\usepackage{A4,Program}
+
+\newcommand{\InstallLoc}{{\tt{INSTALL\_DIR}}}
+
+\begin{document}
+
+\title{\Huge \bf Images Library Tutorial}
+
+\author{
+    Odyssée Team \\
+    I.N.R.I.A\\
+    BP. 93, 2004 Route des Lucioles \\
+    06902 Sophia Antipolis Cedex, France \\
+}
+
+\maketitle
+\thispagestyle{empty}
+\clearpage
+
+\tableofcontents
+\thispagestyle{empty}
+\clearpage
+\addcontentsline{toc}{chapter}{\bf Introduction}
+\markright{Introduction}
+
+\chapter*{Introduction}
+
+The Image library offers some basic functionnalities to deal with images such as creating, loading
+or writting images, resizing and sampling images, indexing or iterating over pixels, filtering,
+\ldots
+
+\medskip
+
+\noindent
+The main classes provided by the library are \verb!Image1D!, \verb!Image2D! and \verb!Image3D!.
+These are classes templated by a pixel type which can be any user type. In addition, there is a
+common base class \verb!Image! and a generic multidimensional class \verb!BaseImage!.
+
+\medskip
+
+\noindent
+The rest of this document shows many small examples of how the library can be used. It is not
+intended to be a full reference manual, but rather a collection of small pieces of code illustrating
+the capabilities of the library.
+
+\chapter{Compiling with the library}
+
+First, make sure you are using the correct version of the C++ compiler, usually the latest version
+of g++ is better (3.2.2 at the time of this writting).
+
+\medskip
+
+\noindent
+Hereafter, we will assume that the libraries have been installed in a given directory that will be
+named \verb!INSTALL_DIR!. Typically, \verb!INSTALL_DIR!  will be something like
+\verb!/proj/odyssee/home!, but this might change. To use the library, the compiler needs to know
+about two kind of things: the include files and the library itself which contains the executable
+code. To inform the compiler of where these files can be found, some flags (\verb!-I!, \verb!-L!,
+\verb!-l!) must be passed. If you use a \verb!Makefile!, these flags can be stored in variables that
+are used to create the various command lines needed for the compilation. Here are examples of the
+kind of variables and flags that typically would have to be set. For more details about the various
+flags and variable names, see the manuals of the compiler and \verb!make!, respectively.  Remember
+to replace \verb!INSTALL_DIR! with the place where your library has been installed.
+
+\medskip
+
+\noindent
+A typical Makefile for RawPgmIOuchar2D (section \ref{section:RawPgmIOuchar2D}) could be:
+\begin{verbatim}
+CXX= /usr/local/gcc-3.2/bin/g++
+CPPFLAGS=-I INSTALL_DIR/include
+CXXFLAGS= $(CPPFLAGS) -rdynamic -Wall -g -DBZ_DEBUG
+LDFLAGS=-LINSTALL_DIR/lib/ -lImages++ -ldl
+RawPgmIOuchar2D: RawPgmIOuchar2D.C
+        $(CXX) $(CXXFLAGS) -o $@ $< $(LDFLAGS)
+clean: 
+        rm -f RawPgmIOuchar2D *.o core
+\end{verbatim}
+
+\noindent
+This example typically shows the libraries needed to use the Image library. It can be seen that
+\verb!libImages++!, which is the library itself depends on another library \verb!dl! (which is
+a system library that allows your program to load dynamically other libraries. 
+The flags \verb!DBZ_DEBUG!, \verb!-g! and \verb!Wall! are optionnal and can be used to debug/improve
+your code.
+
+\chapter{Image initialisation}
+
+\section{Constructors}
+There is the usual constructor taking the dimensions as arguments like in
+\begin{verbatim}
+Image2D<unsigned char> image(100, 200);
+\end{verbatim}
+But you can also write
+\begin{verbatim}
+Image2D<unsigned char> image; // size=0x0
+image.resize(100, 200);
+\end{verbatim}
+One can also give a buffer pointer as an argument to the constructor but in this case,
+the image does not own the data and is not responsible for releasing the corresponding
+memory. Following is a complete example:
+\program{ScaleValues.C}
+
+\section{Image copies}
+
+Note that a code like
+\begin{verbatim}
+Image2D<unsigned char> image;
+Image2D<unsigned char> image2;
+...
+image2=image;
+\end{verbatim}
+will simply make the two images share the same pointer buffer
+and will neither copy the sizes nor the data.
+In particular, if 'image' and 'image2' have the same sizes,
+they are like aliases. But, a statment like
+\begin{verbatim}
+delete &image;
+\end{verbatim}
+will {\em not} release the corresponding data and 'image2' is
+still usable (reference counting is used transparently).\\
+
+\noindent
+If an explicit duplication of 'image' is needed, one should write
+\begin{verbatim}
+Image2D<unsigned char> image;
+Image2D<unsigned char> image2;
+...
+image2=image.copy();
+\end{verbatim}
+
+Following is a complete example of this.
+\program{Copy.C}
+
+\chapter{Data access}
+
+\section{How to index the pixels of an Image ?}
+
+\subsection{Random access}
+\subsubsection{Integer coordinates}
+Random access to the individual pixels of an image can be done using the conventionnal \verb!operator()!.
+\program{PixelAccess.C}
+
+\subsubsection{Real coordinates}
+The same way, random access with float coordinates is provided and bilinear (resp. trilinear)
+interpolation is used to evaluate the value that is returned. No range checking is performed.
+Be aware that because of the interpolation, the range for the $x$ direction (for example) is then
+$0 \leq x \leq .dimx()-2$ and not $0 \leq x \leq .dimx()-1$, as in the integer coordinates case.
+\program{BilinearInterpolation2D.C}
+
+\subsubsection{Sub-Image access}
+
+Any of the coordinates can be defined by a \verb!Range! to specify a range of lines along the
+corresponding dimension. This allows the extraction of any king of sub-space of the original
+image including full sub-images or planes or lines.
+\program{SubImage.C}
+
+\subsection{Sequential access}
+Sequential access is achieved through various iterators depending on the type
+of the objects on which the access is made. For uniformity, all these iterators
+are named in a similar fashion: \verb!iterator<type>! where \verb!type! is the type of the
+element on which we iterate. This iterator can be used to read and write the underlying data
+as in the standard C++ library. To each of these iterator corresponds also an
+iterator that cannot change the iterated data (thus it can only be used to read it)
+and which name is \verb!const_iterator<type>!. Only the non-const versions are described hereafter.
+The use of the const versions should be straightfoward given the examples below.
+
+\medskip
+
+Finally, note that not everything has been done (at least yet!) to ensure that these iterators
+are compliant with the standard C++ various algorithms. Please report any lack of
+functionnality that would be annoying.
+
+\medskip
+
+\emph{A current (suspected) bug in the g++ compiler prevents sometimes the use of
+the} \verb!iterator<type>! \emph{notation particularly in some template functions. In such cases,
+the use of the internal name which looks like} \verb!type\_\[const\_\]iterator! \emph{might
+be necessary.}
+
+\subsubsection{The pixel iterator}
+
+The pixel iterator obviously allows to iterate over all the pixels of an image.
+It's name is \verb!iterator<pixel>!.
+\program{PixelIterator.C}
+
+\subsubsection{The line iterators}
+
+The line iterators allow iteration over the various lines of the images. These
+are named \verb!iterator<line<type> >! where \verb!type! designates the type of lines
+on which the iteration takes places. Valid values for \verb!type! are \verb!row!,
+\verb!column! and \verb!depth! or alternatively \verb!X!, \verb!Y! and \verb!Z!.
+The program below shows a small example of their usage.
+\program{LineIterator.C}
+
+\subsubsection{The slice iterators}
+
+Slice iterators are a generalization of the line iterators that allow to iterate on
+any kind of linear sub-space of the image. For example, they can be used to iterate
+over the planes, lines or pixels of an image. They also give some control over the
+order of iteration. For example they can be used to iterate over the pixel of a 2D
+image row-wise or column-wise (see the example given below). The type returned by
+dereferencing the iterator is an image of the proper dimension. Note that, internally,
+line iterators are implemented using slice iterators. These iterators are named
+\verb!iterator<slice<t1,t2,...> >! where there can be up to four parameters. These
+parameters indicate various dimensions \verb!X!, \verb!Y! or \verb!Z! as with the
+line iterators. The interpretation of these parameters is iterate over the subspace
+\verb!t1=constant! first, then over the subspace \verb!t2=constant! of that space,
+etc.
+\program{SliceIterator.C}
+
+\subsubsection{The domain iterators}
+
+Domain iterators are used to walk over all the valid indexes of an image. These can be
+extremely useful when one wishes to walk over various images simultaneously (with the
+same indexes or with indexes transformed by some arbitrary function). The name of this
+iterator is \verb!iterator<domain>!. The program below shows an extremely simple example
+of their usage. Note that dereferencing this iterator provides a data structure that
+can be asked for its coordinates using \verb!operator()(const Index i)! where the \verb!Index i!
+designates a dimension of the space (ie this function returns the \verb!i!-th coordinate
+of the current pixel referred to by the iterator. Some operations are allowed on this
+indexes (comparisons, 1D-shifts, incrementation, decrementation), more should come later
+(neighbors, scaling, translations, ...).
+\program{DomainIterator.C}
+
+\chapter{Handling borders}
+
+The Image library has two means for handling access to the borders of an image (by borders
+we mean the pixel that are at locations outside of the image range).
+
+\section{Boundary images}
+
+The first method wraps the image into a special container that systematically checks
+the index given by the user:
+
+\begin{itemize}
+    \item If the index is within the range of the image, then the image value is returned.
+    \item If the index is outside the range of the image, then a sensible value is provided.
+\end{itemize}
+
+Two such wrappers currently exist: with \verb!SpecialValueBoundary! the sensible value is a special
+value given by the user (zero by default), whereas \verb!ConstantBoundary! just extends the image
+at infinity assuming that it is constant outside of the range.
+
+This method is particularly useful when nothing is known about the index that will be used with the
+image. This is typically the case when you do matching for example, since nothing warranties that
+the matching map is restricted to the range of the image.
+
+Here is an example of how to use these wrappers.
+
+\program{Boundary.C}
+
+\section{Handling fixed size borders}
+
+In many situations only the very few border pixel are accessed during a local calculation.
+This is the case, for example, when evolving a spatial PDE over the image range. In this case,
+one often wants to allocate a slightly bigger image containing the border and iterate only on
+the sub-space consisting of the original image range. To allocate such \emph{bordered images},
+the class \verb!ConstantBorderedImage! can be used, the constructor of this class takes an
+image shape (its dimensions) and a border size and create an image of the desired size. However,
+it keeps internally an enlarged image and provides a method \verb!UpdateBorders! that can be used
+to update the border with the image content. Currently, only constant borders are supported, but
+this same class might also be used to deal with fixed value borders.
+
+\emph{Insert an example here !!!}
+
+\chapter{Input/Output}
+
+\section{How to read an image without specifying any type or any format ?}
+\program{IOpointer.C}
+
+\section{How to read an image of a specified type ?}
+\program{IOuchar2D.C}
+
+\section{How to read an image in a specified format ?}
+\label{section:RawPgmIOuchar2D}
+\program{RawPgmIOuchar2D.C}
+
+\section{How to read a color PPM image ?}
+\program{BreakPpm.C}
+
+\section{What are the available formats ?}
+\begin{itemize}
+\item RawPgm
+\item Inrimage
+\item RawPpm
+\item Pnm (which supercedes both RawPgm and RawPpm).
+\end{itemize}
+
+\section{How to write a reader/writer for the format Toto ?}
+
+Following are the files RawPgm.H and RawPgm.C. Copy them and modify them.
+
+\program{RawPgm.H}
+\program{RawPgm.C}
+
+As you can see a plugin must derive from \verb!ImageIO! (or one of its specialized derivatives \verb!ImageIO2D! or
+\verb!ImageIO3D!). This pure abstract base class mandates the implementation of the following methods:
+
+\begin{itemize}
+    \item \verb!ImageIO* clone() const throw(std::bad_alloc)!\\
+          This function just return a copy of the io structure. In the future, it might be provided by a simple base class from
+          which the plugin must be derived (TODO). For now, its implementation is straitforward (see line 63 of RawPgm.H).
+    \item \verb!const char* identity() const throw()!\\
+          This function just returns the name of the plugin. For some reason, this name must be stored in a global static
+          variable named \verb!identity! and marked as \verb!extern "C"! (see line 10 of RawPgm.H). Thus the simplest way
+          to implement this methos is just to return this global variable.
+    \item \verb!bool known(const char* buffer,const unsigned n) const throw()!\\
+          This function is given a buffer \verb!buffer! of \verb!n! characters, this buffer contains the first \verb!n!
+          characters of the file that is to be read. These characters are used to determine the file format. The function should
+          return \verb!true! iff the plugin knows how to deal with this file.
+    \item \verb!void identify(std::istream& is)!\\
+          This function is called iff the previous function has returned \verb!true!. Its role is to read and parse the header of
+          the image file and to store all the information needed to read the image (type,dimension,size). The file is accessed from
+          the input stream \verb!is! which should be left pointing to the first byte of data of the image.
+    \item \verb!const Id& pixel_id()  const throw()!\\
+          This function is always called after the function \verb!identify!. It returns the \verb!typeid! of the pixel stored in the
+          file.
+    \item \verb!Dimension dimension() const throw()!\\
+          This function is always called after the function \verb!identify!. It returns the dimension of the image stored in the
+          file. This method is predefined in the classes \verb!ImageIO2D! (to return 2) and \verb!ImageIO3D! (to return 3) as most
+          file format can handle only one type of dimension.
+    \item \verb!Image* create() const throw(std::bad_alloc)!\\
+          This function is always called after the function \verb!identify!. It must create an image of the appropriate type (pixel
+          type, the size is adjusted afterwards) for storing the image depicted in the file.
+    \item \verb!void read(std::istream& is,Image& image)        const!\\
+          This function is always called after the function \verb!identify!. Its resizes the given image \verb!image! to the proper
+          size and reads the data from the stream \verb!is!.
+    \item \verb!bool known(const Image& image) throw()!\\
+          This function must return \verb!true! iff the plugin knows how to save the image \verb!image! given as parameter.
+    \item \verb!void write(std::ostream& os,const Image& image) const!\\
+          This function is called iff the previous function has return true. Its role is to write the image \verb!image! to the
+          stream \verb!os!.
+\end{itemize}
+
+\section{How do the input/output plugins work?}
+
+The images readers and writers are plugins that are automatically loaded at run time by the applications using libImages++. A plugin
+is a dynamic library (.so).  Plugins paths are specified in an ascii file (one per line). In the following, we refer to this file as
+the "plugins list".  For example, a valid plugins list may contain the two following lines:
+\begin{verbatim}
+# A comment.
+INSTALL_DIR/lib/robotvis/Images/plugins/libInrimage.so
+INSTALL_DIR/lib/robotvis/Images/plugins/libRawPgm.so
+\end{verbatim}
+Lines starting with the character \# are considered as comments and are thus ignored.
+A default plugins list is set at compile time, by now it is:
+\begin{verbatim}
+INSTALL_DIR/share/robotvis/Images/default.plugins
+\end{verbatim}
+One can specify an alternate plugins list by setting an environnement variable like in the following example (csh syntax):
+\begin{verbatim}
+setenv IMAGE_IO_PLUGINS $HOME/Images/plugins/list
+\end{verbatim}
+By default, the application loads the plugins silently if there is no error.  To make this process verbose, set an environnement
+variable before running the application, i.e. (csh syntax):
+\begin{verbatim}
+setenv IMAGE_IO_PLUGINS_VERBOSE
+\end{verbatim}
+
+Normally (not tested recently), it is possible to link selected plugins statically to provide a specific set of of file formats
+within the executable. Test this (TODO).
+
+\section{Error handling}
+
+All input/output errors are handled with exceptions. All the exceptions are described in the file Images/Exceptions.H. These
+exceptions can be caught individually or by class. The base class of all image exceptions is \verb!Images::Exception!, which is used in
+all the examples given in this tutorial. The exceptions classes all provide a message (method \verb!what()!) and an error code
+(method \verb!code()!).
+
+\chapter{Polymorphism}
+
+Be aware this part has not been approved yet.
+
+\medskip
+
+This chapter explains how to write polymorphic code, for example how to write a program which extracts a subimage whatever the pixel
+type is ?  Or how to compute the sum of two images, still doing the computations with the original pixel type, without any
+conversion.  With compiled code, there is no way to escape a huge switch where the possible types are enumarated. The purpose here
+is to make this as less tedious as possible ({\it i.e.} to hide the switch in the library).
+
+\medskip
+
+A first attempt to deal with this issue is coded in the file Polymorphic.H.  The idea is to write the code to be executed inside a
+function template, the template arguments beeing the pixel type and the image dimension.  Then, the user specifies which types of
+images are relevant to this code and {\em all} the corresponding functions are {\em instanciated} (of course, this is hidden).
+Finally, the user provides the effective type of the image and a reference to the correct instanciated function is returned. It
+remains to the user to dereference that pointer and to call the function.
+
+\section{Example}
+
+Here is an example of how it works.
+
+\program{Type.C}
+
+The declaration DeclarePolymorphicHandle declares a (very) small class able to build
+instances of the Main function template: we call it a handle to that function template.
+
+If you don't like macros, substitute this line by:
+
+\begin{verbatim}
+struct MainHandle
+{
+    typedef void (*prototype)(void *, int, char**);
+    template <typename Pixel, unsigned Dimension>
+    prototype get() { return  &Main<Pixel, Dimension>; }
+};
+\end{verbatim}
+
+The function Function() returns a pointer to function (one of the many that were instanciated)
+and when it is executed, an exception is thrown if something goes wrong.
+The abstract type of exceptions thrown by Function() is Polymorphic::Exception (which is
+a child of Images::Exception, itself a child of std::exception) and
+its concrete childs are BadPixelType, BadDimension, NoImageArgument and DifferentImages.\\
+
+For the moment, the maximal number of arguments of Types<> is 9 and that of Dimensions<> 3.
+
+\section{Shortcuts}
+
+It is possible to give a name to a set of types and to use this name as an argument to Types<>.
+For instance, you can give the name ``NativeUnsignedInteger'' to the set of all the native unsigned
+integers by writting:
+
+\begin{verbatim}
+template <>
+class Type<NativeUnsignedInteger>
+    : public Types<unsigned char, unsigned short, unsigned int, unsigned long> { };
+\end{verbatim}
+
+And then a switch declaration like:
+
+\begin{verbatim}
+Polymorphic::Types<Polymorphic::NativeUnsignedInteger, float, double> Switch;
+...
+\end{verbatim}
+
+or, if you prefer:
+
+\begin{verbatim}
+using namespace Polymorphic;
+Types<NativeUnsignedInteger, float, double> Switch;
+...
+\end{verbatim}
+would be accepted.\\
+
+In fact, ``NativeUnsignedInteger'' is already defined in the file Polymorphic.H, as are also defined ``NativeSignedInteger'' and ``NativeFloats''.
+
+\end{document}
