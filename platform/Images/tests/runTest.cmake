@@ -13,7 +13,7 @@ FUNCTION(COMPARE NAME OUTPUT REFERENCE)
         IF ("${TEST_COMPARISON}" STREQUAL "file_comparison")
             SET(COMPARISON_COMMAND ${CMAKE_COMMAND} -E compare_files)
         ELSE()
-            SET(COMPARISON_COMMAND "${CMAKE_CURRENT_BINARY_DIR}/Compare")
+            SET(COMPARISON_COMMAND "${CMAKE_BINARY_DIR}/../../../bin/Compare")
         ENDIF()
 
         MESSAGE("${TEST_COMPARISON} ${OUTPUT} ${REFERENCE}")

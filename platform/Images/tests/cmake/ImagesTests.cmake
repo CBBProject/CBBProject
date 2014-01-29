@@ -5,7 +5,7 @@ FUNCTION(CREATE_TESTS NAME TARGET)
     IF (WIN32)
         SET(executable ${EXECUTABLE_OUTPUT_PATH}/${TARGET}${CMAKE_EXECUTABLE_SUFFIX})
     ELSE()
-        SET(executable ${CMAKE_CURRENT_BINARY_DIR}/${TARGET})
+        SET(executable ${CMAKE_BINARY_DIR}/bin/${TARGET})
     ENDIF()
 
     LIST(LENGTH tests len)
