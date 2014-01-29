@@ -1,5 +1,4 @@
-#ifndef TRIPLET_H
-#define TRIPLET_H
+#pragma once
 
 #include <iostream>
 
@@ -61,5 +60,3 @@ inline std::ostream&
 operator<<(std::ostream& os,const stdext::triplet<T1,T2,T3>& t) {
     return os << t.first << t.second  << t.third;
 }
-
-#endif  //  !TRIPLET_H

@@ -1,5 +1,4 @@
-#ifndef IMAGE_RAW_PGM_H
-#define IMAGE_RAW_PGM_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -96,5 +95,3 @@ namespace Images {
         };
     }
 }
-
-#endif  // !IMAGE_RAW_PGM_H

@@ -1,5 +1,4 @@
-#ifndef IMAGE_NULLPIXEL_H
-#define IMAGE_NULLPIXEL_H
+#pragma once
 
 namespace Images {
     namespace Pixels {
@@ -141,5 +140,3 @@ namespace Images {
         BaseImage operator/(const IMAGE& I) const { return *this; }
     };
 }
-
-#endif // !IMAGE_NULLPIXEL_H

@@ -17,8 +17,7 @@
  * 
  */
 
-#ifndef SISLABSTRACTSPLINEBLENDER_P_H
-#define SISLABSTRACTSPLINEBLENDER_P_H
+#pragma once
 
 #include <dtkCore/dtkAbstractProcess_p.h>
 

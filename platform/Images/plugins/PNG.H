@@ -1,5 +1,4 @@
-#ifndef IMAGE_PNG_H
-#define IMAGE_PNG_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -109,5 +108,3 @@ namespace Images {
         };
     }
 }
-
-#endif  // !IMAGE_PNG_H

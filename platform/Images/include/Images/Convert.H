@@ -1,5 +1,4 @@
-#ifndef IMAGE_CONVERT_H
-#define IMAGE_CONVERT_H
+#pragma once
 
 #include <Image.H>
 
@@ -65,5 +64,3 @@ namespace Images {
     }
 #endif
 }
-
-#endif  //  ! IMAGE_CONVERT_H

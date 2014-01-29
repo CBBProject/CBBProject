@@ -1,5 +1,4 @@
-#ifndef MATH_SCALARTYPE_H
-#define MATH_SCALARTYPE_H
+#pragma once
 
 #include <complex>
 
@@ -58,5 +57,3 @@ namespace Maths {
         }
     }
 }
-
-#endif //! MATH_SCALARTYPE_H

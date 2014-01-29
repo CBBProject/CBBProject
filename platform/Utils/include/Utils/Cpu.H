@@ -1,5 +1,4 @@
-#ifndef CPU_H
-#define CPU_H
+#pragma once
 
 #include <Utils/config.h>
 #ifndef WORDS_BIGENDIAN
@@ -63,4 +62,3 @@ namespace Cpu {
 
 }
 
-#endif	//	!CPU_H

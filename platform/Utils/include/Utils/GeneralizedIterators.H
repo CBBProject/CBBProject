@@ -1,5 +1,4 @@
-#ifndef GENERALIZEDITERATORS_H
-#define GENERALIZEDITERATORS_H
+#pragma once
 
 namespace Iterators {
 
@@ -86,5 +85,3 @@ namespace Iterators {
         return static_cast<const Iterator&>(it1)!=static_cast<const Iterator&>(it2);
     }
 }
-
-#endif  //  !GENERALIZEDITERATORS_H

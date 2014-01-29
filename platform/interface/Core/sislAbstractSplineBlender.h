@@ -17,8 +17,7 @@
  * 
  */
 
-#ifndef SISLABSTRACTSPLINEBLENDER_H
-#define SISLABSTRACTSPLINEBLENDER_H
+#pragma once
 
 #include "sislCoreExport.h"
 

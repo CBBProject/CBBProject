@@ -1,5 +1,4 @@
-#ifndef IMAGE_PNM_H
-#define IMAGE_PNM_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -102,5 +101,3 @@ namespace Images {
         };
     }
 }
-
-#endif  // !IMAGE_PNM_H

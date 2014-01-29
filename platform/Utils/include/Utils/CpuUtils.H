@@ -1,5 +1,4 @@
-#ifndef CPUUTILS_H
-#define CPUUTILS_H
+#pragma once
 
 #include <Utils/Cpu.H>
 
@@ -18,4 +17,3 @@ namespace Cpu {
     }
 }
 
-#endif	//	!CPUUTILS_H

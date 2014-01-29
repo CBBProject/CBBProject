@@ -1,5 +1,4 @@
-#ifndef VERBOSE_H
-#define VERBOSE_H
+#pragma once
 
 #include <iostream>
 
@@ -31,5 +30,3 @@ namespace io_utils {
         return vs;
     }
 }
-
-#endif  //  !VERBOSE_H

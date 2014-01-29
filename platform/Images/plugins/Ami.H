@@ -1,5 +1,4 @@
-#ifndef IMAGE_AMI_H
-#define IMAGE_AMI_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -103,5 +102,3 @@ namespace Images {
         };
     }
 }
-
-#endif  // !IMAGE_AMI_H

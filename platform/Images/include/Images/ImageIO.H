@@ -1,5 +1,4 @@
-#ifndef IMAGE_IMAGEIO_H
-#define IMAGE_IMAGEIO_H
+#pragma once
 
 #include <typeinfo>
 #include <cstring>
@@ -450,5 +449,3 @@ namespace Images {
     inline std::istream& operator>>(std::istream &is,const format& f) { f.set(); return is; }
     inline std::ostream& operator<<(std::ostream &os,const format& f) { f.set(); return os; }
 }
-
-#endif // !IMAGE_IMAGEIO_H

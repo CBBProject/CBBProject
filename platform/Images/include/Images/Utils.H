@@ -1,5 +1,4 @@
-#ifndef IMAGE_UTILS_H
-#define IMAGE_UTILS_H
+#pragma once
 
 #include <iostream>
 #include <sstream>
@@ -112,5 +111,3 @@ namespace Images {
         }
     }
 }
-
-#endif  //  !IMAGE_UTILS_H

@@ -1,5 +1,4 @@
-#ifndef TYPES_H
-#define TYPES_H
+#pragma once
 
 namespace Types {
 
@@ -117,5 +116,3 @@ namespace Types {
     };
 #endif
 }
-
-#endif  //  !TYPES_H

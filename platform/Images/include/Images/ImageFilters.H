@@ -1,5 +1,4 @@
-#ifndef IMAGE_IMAGEFILTERS_H
-#define IMAGE_IMAGEFILTERS_H
+#pragma once
 
 #include <Images/Image.H>
 #include <Images/Iterators.H>
@@ -198,5 +197,3 @@ namespace Images {
         return result;
     }
 }
-
-#endif  //  !IMAGE_IMAGEFILTERS_H

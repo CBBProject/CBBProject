@@ -1,5 +1,4 @@
-#ifndef IMAGE_REGION_H
-#define IMAGE_REGION_H
+#pragma once
 
 #include <stack>
 #include <Images/Neighborood.H>
@@ -253,5 +252,3 @@ namespace Images {
         bool                border;
     };
 }
-
-#endif  //  !IMAGE_REGION_H

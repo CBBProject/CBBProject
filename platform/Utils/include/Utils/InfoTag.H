@@ -1,5 +1,4 @@
-#ifndef INFOTAG_H
-#define INFOTAG_H
+#pragma once
 
 #include <typeinfo>
 #include <cstring>
@@ -32,5 +31,3 @@ namespace Types {
         const std::type_info& info;
     };
 }
-
-#endif  //  ! INFOTAG_H

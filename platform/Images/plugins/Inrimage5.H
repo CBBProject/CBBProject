@@ -1,5 +1,4 @@
-#ifndef IMAGE_INRIMAGE5_H
-#define IMAGE_INRIMAGE5_H
+#pragma once
 
 #include <stdint.h>
 
@@ -393,5 +392,3 @@ namespace Images {
         }
     }
 }
-
-#endif  //  !IMAGE_INRIMAGE5_H

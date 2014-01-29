@@ -1,5 +1,4 @@
-#ifndef IMAGE_PIXELIO_H
-#define IMAGE_PIXELIO_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -37,5 +36,3 @@ namespace Images {
         }
     }
 }
-
-#endif // !IMAGE_PIXELIO_H

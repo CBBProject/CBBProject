@@ -1,5 +1,4 @@
-#ifndef IOUTILS_H
-#define IOUTILS_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -468,5 +467,3 @@ namespace io_utils {
         return imanip3<std::string&,const char,const bool>(file_internal,filename,delimiter,force_delimiter);
     }
 }
-
-#endif  //  !IOUTILS_H

@@ -1,5 +1,4 @@
-#ifndef PLUGINS_H
-#define PLUGINS_H
+#pragma once
 
 #include <list>
 
@@ -22,5 +21,3 @@ namespace Plugins {
         ~plugins();
     };
 }
-
-#endif  //  ! PLUGINS_H

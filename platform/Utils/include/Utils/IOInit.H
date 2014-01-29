@@ -1,5 +1,4 @@
-#ifndef IOINIT_H
-#define IOINIT_H
+#pragma once
 
 #include <ios>
 #include <stdexcept>
@@ -32,5 +31,3 @@ namespace io_utils {
         const iostate state;
     };
 }
-
-#endif  //  ! IOINIT_H

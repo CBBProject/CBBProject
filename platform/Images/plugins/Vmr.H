@@ -1,5 +1,4 @@
-#ifndef IMAGE_VRM_H
-#define IMAGE_VRM_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -99,5 +98,3 @@ namespace Images {
         };
     }
 }
-
-#endif  // !IMAGE_VRM_H

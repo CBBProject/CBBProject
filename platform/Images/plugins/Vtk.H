@@ -1,5 +1,4 @@
-#ifndef IMAGE_VTK_H
-#define IMAGE_VTK_H
+#pragma once
 
 #include <stdint.h>
 
@@ -335,5 +334,3 @@ namespace Images {
         };
     }
 }
-
-#endif  //  !IMAGE_VTK_H

@@ -1,5 +1,4 @@
-#ifndef IMAGE_INRIMAGE_H
-#define IMAGE_INRIMAGE_H
+#pragma once
 
 #include <iostream>
 #include <map>
@@ -303,5 +302,3 @@ namespace Images {
         };
     }
 }
-
-#endif  //  !IMAGE_INRIMAGE_H

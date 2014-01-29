@@ -17,8 +17,7 @@
  * 
  */
 
-#ifndef SISLCOMPOSERNODESPLINEBLENDER_H
-#define SISLCOMPOSERNODESPLINEBLENDER_H
+#pragma once
 
 #include "sislComposerExport.h"
 
@@ -53,5 +52,3 @@ public:
 private:
     sislComposerNodeSplineBlenderPrivate *d;
 };
-
-#endif
