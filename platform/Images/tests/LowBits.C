@@ -10,7 +10,7 @@ int main(int argc,char *argv[]) {
 
     //  Read the images.
 
-    std::ifstream ifs(argv[1]);
+    std::ifstream ifs(argv[1],std::ios::binary);
     Images::Image2D<unsigned char> image;
     ifs >> image;
 
@@ -25,7 +25,7 @@ int main(int argc,char *argv[]) {
     for (Image2D<unsigned char>::iterator<pixel> i=image.begin();i!=image.end();++i)
         *i = (*i)&mask;
 
-    std::ofstream ofs(argv[3]);
+    std::ofstream ofs(argv[3],std::ios::binary);
     ofs << image;
 
     return 0;

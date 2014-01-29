@@ -55,7 +55,7 @@ main(const int argc,const char* argv[]) try {
 
     //  Read the images.
 
-    std::ifstream ifs(argv[1]);
+    std::ifstream ifs(argv[1],std::ios::binary);
     Image* image;
     ifs >> image;
 
@@ -73,7 +73,7 @@ main(const int argc,const char* argv[]) try {
     Image* res = static_cast<Image*>((*item.Function<NormGradHandle>())(image));
 
     if (argc==3) {
-        std::ofstream ofs(argv[2]);
+        std::ofstream ofs(argv[2],std::ios::binary);
         ofs << *res;
     } else {
         std::cout << *res;

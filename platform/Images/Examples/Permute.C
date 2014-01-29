@@ -38,9 +38,9 @@ main(const int argc,const char* argv[]) try {
 
     Image* image;
 
-    std::ifstream ifs(argv[1]);
-    std::ofstream ofs(argv[2]);
-    std::ifstream ifp(argv[3]);
+    std::ifstream ifs(argv[1],std::ios::binary);
+    std::ofstream ofs(argv[2],std::ios::binary);
+    std::ifstream ifp(argv[3],std::ios::binary);
 
     ifs >> image;
 

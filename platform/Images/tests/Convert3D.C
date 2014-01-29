@@ -24,7 +24,7 @@ main(int argc,char* argv[]) try
     //  Read the image.
 
     Image3D<float> image;
-    std::ifstream ifs(argv[1]);
+    std::ifstream ifs(argv[1],std::ios::binary);
 
     ifs >> image;
 

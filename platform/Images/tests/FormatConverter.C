@@ -19,12 +19,12 @@ main(const int argc,const char* argv[]) try {
         }
     }
 
-    std::ifstream ifs(argv[1]);
+    std::ifstream ifs(argv[1],std::ios::binary);
     if (FromSuffixForInput)
         ifs >> Images::format(argv[1],Images::format::FromSuffix);
     ifs >> image;
 
-    std::ofstream ofs(argv[2]);
+    std::ofstream ofs(argv[2],std::ios::binary);
     ofs << Images::format(argv[2],Images::format::FromSuffix) << image;
 
     return 0;

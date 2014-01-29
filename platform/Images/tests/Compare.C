@@ -56,7 +56,7 @@ main(int argc,char *argv[]) try
 
     //  Read the images.
 
-    ifstream ifs1(argv[1]);
+    ifstream ifs1(argv[1],ios::binary);
     if (FromSuffixForInput)
         ifs1 >> Images::format(argv[1],Images::format::FromSuffix);
     Image* image1;
@@ -73,7 +73,7 @@ main(int argc,char *argv[]) try
         return 1;
     }
 
-    ifstream ifs2(argv[2]);
+    ifstream ifs2(argv[2],ios::binary);
     if (FromSuffixForInput)
         ifs2 >> Images::format(argv[2],Images::format::FromSuffix);
     Image* image2;
@@ -115,7 +115,7 @@ main(int argc,char *argv[]) try
     Image* res = static_cast<Image*>((*item.Function<CompareHandle>())(image1,image2));
 
     if (argc==4) {
-        ofstream ofs(argv[3]);
+        ofstream ofs(argv[3],std::ios::binary);
         ofs << *res;
     } else {
         cout << *res;

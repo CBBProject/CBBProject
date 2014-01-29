@@ -57,7 +57,7 @@ namespace Plugins {
 
         Verbose << "Loading plugins from file " << list << " {\n";
 
-        std::ifstream liststream(list);
+        std::ifstream liststream(list,std::ios::binary);
         if (!liststream) {
             std::cerr << "\tError when loading plugins: " << list << " could not be opened." << std::endl;
             return;

@@ -10,14 +10,14 @@ int main(int argc,char *argv[]) {
 
     //  Read the images.
 
-    std::ifstream ifs(argv[1]);
+    std::ifstream ifs(argv[1],std::ios::binary);
     Images::Image3D<unsigned short> image;
     ifs >> image;
 
     for (Image3D<unsigned short>::iterator<pixel> i=image.begin();i!=image.end();++i)
         *i = ((*i)&255)*256+(*i)/256;
 
-    std::ofstream ofs(argv[2]);
+    std::ofstream ofs(argv[2],std::ios::binary);
     ofs << image;
 
     return 0;

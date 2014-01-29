@@ -42,7 +42,7 @@ main(const int argc,const char* argv[]) try
     grad[0] = gx;
     grad[1] = gy;
 
-    std::ofstream ofs(res);
+    std::ofstream ofs(res,std::ios::binary);
     ofs << grad;
 
     return 0;

@@ -17,7 +17,7 @@ main()
     for(Image3D::iterator<pixel> i=image.begin();i!=image.end();++i)
         *i = k++;
     
-    std::ofstream ofs("Simple3D.inr5");
+    std::ofstream ofs("Simple3D.inr5",std::ios::binary);
     ofs << image;
 
     return 0;

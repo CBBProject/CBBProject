@@ -25,7 +25,7 @@ public:
         if (image_)
             delete image_;
         std::cerr << "Reading image " <<  filename << std::endl;
-        std::ifstream ifs(filename.c_str());
+        std::ifstream ifs(filename.c_str(),std::ios::binary);
         ifs >> image_;
 	qDebug() << Q_FUNC_INFO << "Done";
     }

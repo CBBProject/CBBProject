@@ -16,7 +16,7 @@ main(int argc,char *argv[]) try
 
     const Image3D<float> res = image1-shiftvalue;
 
-    std::ofstream ofs(argv[3]);
+    std::ofstream ofs(argv[3],std::ios::binary);
     ofs << res;
 
     return 0;

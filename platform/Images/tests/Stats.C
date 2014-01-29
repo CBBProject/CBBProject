@@ -38,7 +38,7 @@ main(int argc,char *argv[]) try
 
     //  Read the images.
 
-    ifstream ifs(argv[1]);
+    ifstream ifs(argv[1],std::ios::binary);
     Image *image;
     ifs >> image;
 

@@ -325,7 +325,7 @@ namespace Images {
 
         void Read(const char* name) {
             try {
-                std::ifstream ifs(name);
+                std::ifstream ifs(name,std::ios::binary);
                 ifs >> *this;
             } catch(...) {
                 throw UnknownNamedFileFormat(name);

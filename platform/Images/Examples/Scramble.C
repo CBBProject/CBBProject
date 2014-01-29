@@ -55,8 +55,8 @@ main(const int argc,const char* argv[]) try {
 
     Image* image;
 
-    std::ifstream ifs(argv[1]);
-    std::ofstream ofs(argv[2]);
+    std::ifstream ifs(argv[1],std::ios::binary);
+    std::ofstream ofs(argv[2],std::ios::binary);
 
     const unsigned n = atoi(argv[3]);
 
