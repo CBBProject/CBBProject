@@ -27,7 +27,7 @@ public:
 // cbbComposerNodeView implementation
 // /////////////////////////////////////////////////////////////////
 
-cbbComposerNodeView::cbbComposerNodeView(): dtkComposerNodeLeaf() {\
+cbbComposerNodeView::cbbComposerNodeView(): dtkComposerNodeLeafView() {\
   d = new cbbComposerNodeViewPrivate;
   d->view = 0;
   appendReceiver(&(d->receiver_image));

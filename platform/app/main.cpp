@@ -9,6 +9,8 @@
 int
 main(int argc, char **argv) {
 
+    //QCoreApplication::setAttribute(Qt::AA_X11InitThreads);
+
     QApplication application(argc, argv);
     application.setApplicationName("cbb-platform");
     application.setApplicationVersion("0.0.1");

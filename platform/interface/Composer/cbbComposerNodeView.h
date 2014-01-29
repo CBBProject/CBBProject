@@ -7,7 +7,7 @@
 
 class cbbComposerNodeViewPrivate;
 
-class CBBCOMPOSER_EXPORT cbbComposerNodeView : public dtkComposerNodeLeaf {
+class CBBCOMPOSER_EXPORT cbbComposerNodeView : public dtkComposerNodeLeafView {
 public:
      cbbComposerNodeView();
     ~cbbComposerNodeView();
@@ -19,6 +19,9 @@ public:
 
     QString  inputLabelHint(const int port);
     QString outputLabelHint(const int port);
+
+    virtual bool isAbstractView()      const { return false;           }
+    virtual QString abstractViewType() const { return QString("view"); }
 
 private:
     cbbComposerNodeViewPrivate *d;
