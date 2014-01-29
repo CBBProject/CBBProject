@@ -1,0 +1,16 @@
+<!DOCTYPE dtk>
+<dtk>
+ <node x="-340" y="-66" type="string" id="0">
+  <value>/home/papadop/src/Git/CBBProject/CBBProject/platform/Images/tests/images/bear.pgm</value>
+ </node>
+ <node x="-120" y="11" type="cbbDataImage" id="1"/>
+ <node x="127" y="37" type="cbbView" id="2"/>
+ <edge>
+  <source node="0" type="output" id="0"/>
+  <destination node="1" type="input" id="0"/>
+ </edge>
+ <edge>
+  <source node="1" type="output" id="0"/>
+  <destination node="2" type="input" id="0"/>
+ </edge>
+</dtk>
