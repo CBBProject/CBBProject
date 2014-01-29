@@ -69,6 +69,7 @@ target_link_libraries(${PROJECT_NAME}
   ${QT_LIBRARIES}
   dtkCore
   dtkLog
+  ImagesIOPlugins
   Images)
 
 dtk_build_doc(cbbDataImagePlugin)
