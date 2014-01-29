@@ -14,7 +14,7 @@ Dependencies(Images Utils)
 include_directories(include plugins ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 set(PLUGIN_DIRECTORY ${INSTALL_LIB_DIR}/Images/plugins)
-sub_directories(include src plugins tests doc)
+sub_directories(include src plugins viewer tests doc)
 
 # Help other projects use Images
 
