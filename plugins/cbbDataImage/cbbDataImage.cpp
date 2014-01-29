@@ -6,9 +6,7 @@
 
 // cbbDataImage implementation
 
-cbbDataImage::cbbDataImage(): cbbAbstractImage() {
-  image_ = 0;
-}
+cbbDataImage::cbbDataImage(): cbbAbstractImage(),image_(0) { }
 
 cbbDataImage::~cbbDataImage() {
     if (image_!=0)

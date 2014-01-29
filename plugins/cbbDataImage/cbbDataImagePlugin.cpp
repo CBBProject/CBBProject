@@ -16,8 +16,8 @@
 class cbbDataImagePluginPrivate : public dtkPluginPrivate
 {
 public:
-    cbbDataImagePluginPrivate(cbbDataImagePlugin *q = 0) : dtkPluginPrivate(q) {}
-    cbbDataImagePluginPrivate(const cbbDataImagePluginPrivate& other) : dtkPluginPrivate(other) {} // Complete copy ctror with your local members.
+    cbbDataImagePluginPrivate(cbbDataImagePlugin *q = 0): dtkPluginPrivate(q) {}
+    cbbDataImagePluginPrivate(const cbbDataImagePluginPrivate& other): dtkPluginPrivate(other) {} // Complete copy ctror with your local members.
 
 public:
     ~cbbDataImagePluginPrivate() {}
@@ -36,52 +36,37 @@ DTK_IMPLEMENT_PRIVATE(cbbDataImagePlugin, dtkPlugin);
 // cbbDataImagePlugin implementation
 // /////////////////////////////////////////////////////////////////
 
-cbbDataImagePlugin::cbbDataImagePlugin(QObject *parent) : dtkPlugin(*new cbbDataImagePluginPrivate, parent)
-{
+cbbDataImagePlugin::cbbDataImagePlugin(QObject *parent): dtkPlugin(*new cbbDataImagePluginPrivate,parent) { }
 
-}
+cbbDataImagePlugin::cbbDataImagePlugin(const cbbDataImagePlugin& other): dtkPlugin(*new cbbDataImagePluginPrivate(*other.d_func()),other) { }
 
-cbbDataImagePlugin::cbbDataImagePlugin(const cbbDataImagePlugin& other) : dtkPlugin(*new cbbDataImagePluginPrivate(*other.d_func()), other)
-{
-    
-}
+cbbDataImagePlugin::~cbbDataImagePlugin() { }
 
-cbbDataImagePlugin::~cbbDataImagePlugin()
-{
-
-}
-
-bool cbbDataImagePlugin::initialize()
-{
-    if(!cbbDataImage::registered())
-	dtkWarn() << "Unable to register cbbDataImage type";
-
+bool cbbDataImagePlugin::initialize() {
+    if (!cbbDataImage::registered()) {
+        dtkWarn() << "Unable to register cbbDataImage type";
+    }
     return true;
 }
 
-bool cbbDataImagePlugin::uninitialize()
-{
+bool cbbDataImagePlugin::uninitialize() {
     return true;
 }
 
-QString cbbDataImagePlugin::name() const
-{
+QString cbbDataImagePlugin::name() const {
     return "cbbDataImagePlugin";
 }
 
-QString cbbDataImagePlugin::description() const
-{
+QString cbbDataImagePlugin::description() const {
     return "Image data";
 }
 
-QStringList cbbDataImagePlugin::tags() const
-{
+QStringList cbbDataImagePlugin::tags() const {
     return QStringList("Image");
 }
 
-QStringList cbbDataImagePlugin::types() const
-{
+QStringList cbbDataImagePlugin::types() const {
     return QStringList() << "cbbDataImage";
 }
 
-Q_EXPORT_PLUGIN2(cbbDataImagePlugin, cbbDataImagePlugin)
+Q_EXPORT_PLUGIN2(cbbDataImagePlugin,cbbDataImagePlugin)

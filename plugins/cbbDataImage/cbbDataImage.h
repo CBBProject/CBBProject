@@ -27,14 +27,14 @@ public:
         std::cerr << "Reading image " <<  filename << std::endl;
         std::ifstream ifs(filename.c_str(),std::ios::binary);
         ifs >> image_;
-	qDebug() << Q_FUNC_INFO << "Done";
+        qDebug() << Q_FUNC_INFO << "Done";
     }
 
     void setData(void *data) {
         std::cerr << "Setting data." << std::endl;
         const char* image_name = static_cast<const char*>(data);
         setImage(image_name);
-	qDebug() << Q_FUNC_INFO << "Done";
+        qDebug() << Q_FUNC_INFO << "Done";
     }
 
     void* data() { return image_; }
