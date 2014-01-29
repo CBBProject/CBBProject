@@ -4,7 +4,9 @@ include_directories(${Boost_INCLUDE_DIRS})
 function(add_plugin PLUGIN)
     add_library(${PLUGIN} SHARED ${PLUGIN}.C)
     if (${PLUGIN} STREQUAL "Inrimage5")
-        target_link_libraries(${PLUGIN} ${Boost_LIBRARIES})
+        target_link_libraries(${PLUGIN} ${Boost_LIBRARIES} Images)
+    else()
+        target_link_libraries(${PLUGIN} Images)
     endif()
     set_target_properties(${PLUGIN} PROPERTIES
                           VERSION 1.0.0
