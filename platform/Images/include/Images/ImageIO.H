@@ -8,6 +8,7 @@
 #include <string>
 #include <iomanip>
 
+#include <cbbExport.h>
 #include <Images/Defs.H>
 #include <Images/Exceptions.H>
 
@@ -28,7 +29,7 @@ namespace Images {
     //  It implements a virtual constructor and the automatic registration of
     //  derived classes.
 
-    class ImageIO {
+    class CBB_WINDOWS_EXPORT ImageIO {
     public:
 
         typedef std::type_info           Id;
@@ -174,7 +175,7 @@ namespace Images {
     };
 
     class Image;
-    template <unsigned DIM,typename Pixel> class BaseImage;
+    template <unsigned DIM,typename Pixel> class CBB_WINDOWS_EXPORT BaseImage;
 
     namespace Internal {
 

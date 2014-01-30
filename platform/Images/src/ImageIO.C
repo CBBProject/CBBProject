@@ -6,10 +6,10 @@
 
 namespace Images {
 
-    ImageIO* ImageIO::DefaultIO = 0;
-    bool     ImageIO::permanent = false;
+    CBB_WINDOWS_EXPORT ImageIO* ImageIO::DefaultIO = 0;
+    CBB_WINDOWS_EXPORT bool     ImageIO::permanent = false;
 
-    ImageIO::Suffixes ImageIO::no_suffixes;
+    CBB_WINDOWS_EXPORT ImageIO::Suffixes ImageIO::no_suffixes;
 
     namespace Internal {
 
