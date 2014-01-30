@@ -16,8 +16,7 @@
 // cbbViewImagePrivate interface
 // /////////////////////////////////////////////////////////////////
 
-class cbbViewImagePrivate : public dtkAbstractViewPrivate
-{
+class cbbViewImagePrivate: public dtkAbstractViewPrivate {
 public:
     cbbViewImagePrivate(cbbViewImage *q = 0) : dtkAbstractViewPrivate(q) {}
     cbbViewImagePrivate(const cbbViewImagePrivate& other) : dtkAbstractViewPrivate(other) {} // Complete copy ctror with your local members.
