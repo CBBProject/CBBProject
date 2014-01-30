@@ -1,27 +1,27 @@
-SET(Images_LIB_SOURCES Image.C RGBPixel.C ImageIO.C)
+set(Images_LIB_SOURCES Image.C RGBPixel.C ImageIO.C)
 
-ADD_LIBRARY(Images SHARED ${Images_LIB_SOURCES})
-TARGET_LINK_LIBRARIES(Images)
+add_library(Images SHARED ${Images_LIB_SOURCES})
+target_link_libraries(Images)
 
-SET_TARGET_PROPERTIES(Images PROPERTIES
+set_target_properties(Images PROPERTIES
                       VERSION
                       ${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}
                       SOVERSION 0
                       CLEAN_DIRECT_OUTPUT 1)
 
-ADD_DEFINITIONS(-DIMAGE_IO_PLUGINS_DEFAULT_LIST=\"${PLUGIN_DIRECTORY}/default.plugins\")
-ADD_LIBRARY(ImagesIOPlugins SHARED ImageIOPlugins.C)
-TARGET_LINK_LIBRARIES(ImagesIOPlugins Images Plugins)
+add_definitions(-DIMAGE_IO_PLUGINS_DEFAULT_LIST=\"${PLUGIN_DIRECTORY}/default.plugins\")
+add_library(ImagesIOPlugins SHARED ImageIOPlugins.C)
+target_link_libraries(ImagesIOPlugins Images Plugins)
 
-SET_TARGET_PROPERTIES(ImagesIOPlugins PROPERTIES
+set_target_properties(ImagesIOPlugins PROPERTIES
                       VERSION
                       ${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}
                       SOVERSION 0
                       CLEAN_DIRECT_OUTPUT 1)
 
-SET(LIB_DESTINATION ${CMAKE_INSTALL_LIBDIR}/Odyssee++)
+set(LIB_DESTINATION ${CMAKE_INSTALL_LIBDIR}/Odyssee++)
 
-INSTALL(TARGETS Images ImagesIOPlugins EXPORT Images
+install(TARGETS Images ImagesIOPlugins EXPORT Images
         LIBRARY DESTINATION ${INSTALL_LIB_DIR}
         ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
         PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}"
