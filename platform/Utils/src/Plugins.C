@@ -1,5 +1,5 @@
 #include <dlfcn.h>
-#include <sys/stat.h>
+
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -7,6 +7,8 @@
 #include <Utils/IOUtils.H>
 #include <Utils/Plugins.H>
 #include <Utils/Verbose.H>
+
+#include <boost/filesystem.hpp>
 
 namespace Plugins {
 
@@ -17,9 +19,13 @@ namespace Plugins {
 
         //  Test if it is an "ordinary file" (see mknod(2)).
 
-        struct stat st;
-        stat(file,&st);
-        if (!(st.st_mode&S_IFREG)) {
+        boost::filesystem::path path(file);
+        if (!exists(path)) {
+            std::cerr << "      Error: plugin " << file << " does not exist" << std::endl;
+            return;
+        }
+
+        if (is_directory(path)) {
             std::cerr << "      Error when loading the image io plugins: " << file << " is not a plugin" << std::endl;
             return;
         }
