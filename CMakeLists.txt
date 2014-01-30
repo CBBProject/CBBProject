@@ -24,6 +24,6 @@ foreach(i Utils Maths Images)
     include_directories(platform/${i}/include)
     include_directories(${CMAKE_CURRENT_BINARY_DIR}/platform/${i}/include)
 endforeach()
-include_directories(platform/interface)
+include_directories(platform/interface include)
 
 subdirs(dtk platform plugins)
