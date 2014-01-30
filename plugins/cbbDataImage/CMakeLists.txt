@@ -44,10 +44,10 @@ configure_file (
   "${PROJECT_BINARY_DIR}/cbbDataImagePluginConfig.h")
 
 set(${PROJECT_NAME}_HEADERS_MOC
-  cbbDataImagePlugin.h
-  cbbDataImage.h)
+  cbbDataImagePlugin.h)
 
 set(${PROJECT_NAME}_HEADERS
+  cbbDataImage.h
   ${${PROJECT_NAME}_HEADERS_MOC})
 
 set(${PROJECT_NAME}_SOURCES

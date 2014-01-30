@@ -2,12 +2,12 @@
 
 #include <QtCore>
 
-#include <cbbComposerExport.h>
+#include <cbbExport.h>
 #include <dtkComposer/dtkComposerFactory.h>
 
 class cbbComposerFactoryPrivate;
 
-class CBBCOMPOSER_EXPORT cbbComposerFactory: public dtkComposerFactory {
+class CBB_WINDOWS_EXPORT cbbComposerFactory: public dtkComposerFactory {
     Q_OBJECT
 
 public slots:

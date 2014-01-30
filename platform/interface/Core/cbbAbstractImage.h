@@ -1,13 +1,13 @@
 #pragma once
 
-#include <cbbCoreExport.h>
+#include <cbbExport.h>
 #include <dtkCore/dtkAbstractData.h>
 
 namespace Images {
     class Image;
 }
 
-class CBBCORE_EXPORT cbbAbstractImage: public dtkAbstractData {
+class CBB_WINDOWS_EXPORT cbbAbstractImage: public dtkAbstractData {
     Q_OBJECT
 
 public:

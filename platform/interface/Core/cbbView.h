@@ -1,13 +1,13 @@
 #pragma once
 
-#include <cbbCoreExport.h>
+#include <cbbExport.h>
 
 #include <dtkCore/dtkAbstractView.h>
 
 class cbbAbstractImage;
 class cbbViewPrivate;
 
-class CBBCORE_EXPORT cbbView: public dtkAbstractView {
+class CBB_WINDOWS_EXPORT cbbView: public dtkAbstractView {
     Q_OBJECT
 
 public:

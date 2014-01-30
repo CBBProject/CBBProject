@@ -2,12 +2,12 @@
 
 #include <QtCore>
 
-#include <cbbComposerExport.h>
+#include <cbbExport.h>
 #include <dtkComposer/dtkComposerNodeLeaf.h>
 
 class cbbComposerNodeImagePrivate;
 
-class CBBCOMPOSER_EXPORT cbbComposerNodeImage: public dtkComposerNodeLeaf {
+class CBB_WINDOWS_EXPORT cbbComposerNodeImage: public dtkComposerNodeLeaf {
 public:
      cbbComposerNodeImage();
     ~cbbComposerNodeImage();

@@ -1,13 +1,14 @@
 #pragma once
 
+#include <cbbExport.h>
+
 #include <fstream>
 #include <Image.H>
 #include <Core/cbbAbstractImage.h>
-#include "cbbDataImagePluginExport.h"
 
 // cbbDataImage interface
 
-class CBBDATAIMAGEPLUGIN_EXPORT cbbDataImage: public cbbAbstractImage {
+class CBB_WINDOWS_EXPORT cbbDataImage: public cbbAbstractImage {
 public:
 
     cbbDataImage();
@@ -40,6 +41,7 @@ public:
     void* data() { return image_; }
 
 private:
+
     static const char id[];
 
     static dtkAbstractData* create() { return new cbbDataImage(); }

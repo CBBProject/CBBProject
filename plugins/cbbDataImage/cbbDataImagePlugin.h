@@ -6,15 +6,15 @@
 
 #include <dtkCore/dtkPlugin.h>
 
-#include "cbbDataImagePluginExport.h"
+#include "cbbExport.h"
 
-class CBBDATAIMAGEPLUGIN_EXPORT cbbDataImagePluginPrivate;
+class CBB_WINDOWS_EXPORT cbbDataImagePluginPrivate;
 
 // /////////////////////////////////////////////////////////////////
 // cbbDataImagePlugin interface
 // /////////////////////////////////////////////////////////////////
 
-class CBBDATAIMAGEPLUGIN_EXPORT cbbDataImagePlugin : public dtkPlugin
+class CBB_WINDOWS_EXPORT cbbDataImagePlugin : public dtkPlugin
 {
     Q_OBJECT
     Q_INTERFACES(dtkPlugin)

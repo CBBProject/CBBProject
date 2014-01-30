@@ -1,7 +1,7 @@
 #pragma once
 
 #include <dtkCore/dtkAbstractView.h>
-#include "cbbViewImagePluginExport.h"
+#include "cbbExport.h"
 
 class cbbViewImagePrivate;
 
@@ -9,7 +9,7 @@ class cbbViewImagePrivate;
 // cbbViewImage interface
 // /////////////////////////////////////////////////////////////////
 
-class CBBVIEWIMAGEPLUGIN_EXPORT cbbViewImage : public dtkAbstractView
+class CBB_WINDOWS_EXPORT cbbViewImage : public dtkAbstractView
 {
     Q_OBJECT
 
