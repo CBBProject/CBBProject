@@ -9,7 +9,7 @@
 namespace Images {
 
 #pragma GCC visibility push(default)
-    extern "C" const char identity[]; // Cannot be made static !!!
+    extern "C" CBB_WINDOWS_EXPORT const char identity[]; // Cannot be made static !!!
 #pragma GCC visibility pop
 
     namespace Vmr {
@@ -19,7 +19,7 @@ namespace Images {
         // It is widely documented so that anyone can copy the
         // code and write its own Image reader/writer.
 
-        class IO: public Image3DIO {
+        class CBB_WINDOWS_EXPORT IO: public Image3DIO {
         public:
 
             using Image3DIO::Id;

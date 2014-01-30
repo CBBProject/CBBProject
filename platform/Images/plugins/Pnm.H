@@ -14,7 +14,7 @@
 namespace Images {
 
 #pragma GCC visibility push(default)
-    extern "C" const char identity[]; // Cannot be made static !!!
+    extern "C" CBB_WINDOWS_EXPORT const char identity[]; // Cannot be made static !!!
 #pragma GCC visibility pop
 
     namespace Pnm {
@@ -28,7 +28,7 @@ namespace Images {
 
 #pragma GCC visibility push(default)
 
-        class IO: public Image2DIO {
+        class CBB_WINDOWS_EXPORT IO: public Image2DIO {
         public:
           
             using Image2DIO::Id;

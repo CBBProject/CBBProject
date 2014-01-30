@@ -15,7 +15,7 @@
 namespace Images {
 
 #pragma GCC visibility push(default)
-    extern "C" const char identity[]; // Cannot be made static !!!
+    extern "C" CBB_WINDOWS_EXPORT const char identity[]; // Cannot be made static !!!
 #pragma GCC visibility pop
 
     namespace Inrimage {
@@ -155,7 +155,7 @@ namespace Images {
 
         //  This class is a concrete implementation of an ImageIO which is able to read/write inrimages.
 
-        class IO: public ImageIO {
+        class CBB_WINDOWS_EXPORT IO: public ImageIO {
         public:
 
             using ImageIO::Id;
