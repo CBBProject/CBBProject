@@ -1,4 +1,4 @@
-SET(Utils_HEADERS Cpu.H CpuUtils.H GeneralizedIterators.H IOInit.H
+set(Utils_HEADERS Cpu.H CpuUtils.H GeneralizedIterators.H IOInit.H
                   IOUtils.H Plugins.H Types.H Verbose.H triplet.H)
 
 include(TestBigEndian)
