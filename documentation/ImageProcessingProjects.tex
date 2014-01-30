@@ -1,0 +1,148 @@
+\documentclass[10pt,a4paper]{article}
+
+\topmargin -1.5cm
+\oddsidemargin  -0.95cm
+\evensidemargin -0.95cm
+\textheight 25cm
+\textwidth 18.0cm
+
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amsthm,amssymb,pifont,makeidx}
+\usepackage{makeidx}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{color}
+
+\title{Image Processing Projects}
+\author{} 
+\date{}
+\begin{document}
+\maketitle
+
+\section{Initial downloads and installations}
+\begin{itemize}
+\item git : \url{http://git-scm.com/downloads}
+\item cmake : \url{http://www.cmake.org}
+\item qt 4.8.5: \url{http://qt-project.org/downloads} 
+\item boost: \url{http://www.boost.org/}
+\item lapack: \url{http://www.netlib.org/lapack/}
+\end{itemize}
+A C++ compiling environment\\
+\\
+Setup an account on github \url{http://www.github.com} \\
+Create (if you do not have one already) an ssh key and to deposit it on this site.\\
+If you succesfully installed git and setup the git account, you can
+checkout the project:\\
+
+{\tt git clone --recursive git@github.com:CBBProject/CBBProject.git}
+
+\section{Processing of 2D gray-scale images}
+
+\subsection{Basic Processing}
+
+%The image class should contain:\\
+%\begin{itemize}   
+%\item image size (N lines, M columns)
+%\item image min and max values
+%\end{itemize}
+
+\subsubsection{Load an image (already provided)} 
+\begin{itemize}   
+\item[Input:] image path
+\item[Output:] boolean flag 
+\end{itemize}
+\subsubsection{Save an image (already provided)} 
+\begin{itemize}   
+\item[Inputs:] image path, image
+\item[Output:] boolean flag 
+\end{itemize}    
+
+\subsubsection{Threshold an image}
+\begin{itemize}   
+\item[Inputs:] image I, scalar S
+\item[Output:]thresholded image $\tt J$ such that $\tt J(i,j)=I(i,j)$ if ${\tt I(i,j)\geq S}$, otherwise ${\tt J(i,j)=0}$
+\end{itemize}        
+
+
+\subsubsection{Display an image}
+\begin{itemize}   
+\item[Inputs:] image I, \\
+  image range (intensities corresponding to min (black) and max (white))
+\item[Output:] display of image (thresholded to fit the range)
+\end{itemize}        
+
+\subsubsection{Multiply 2 images pixel-wise}
+\begin{itemize}   
+\item[Inputs:] images I and J
+\item[Output:] image K such that K(i,j)=I(i,j)*J(i,j)
+\end{itemize}        
+
+\subsubsection{Add two images pixel-wise (already provided)}
+\begin{itemize}   
+\item[Inputs:] images I and J
+\item[Output:] image K such that K(i,j)=I(i,j)+J(i,j)
+\end{itemize}        
+
+\subsubsection{Modify the pixel intensities of an image (e.g. by a look-up table)}
+\begin{itemize}   
+\item[Inputs:] image I\\
+ name of function (look-up table) f 
+\item[Output:] image J such that J(i,j) = f(I(i,j)) 
+\end{itemize}       
+
+\subsubsection{Create an image defined by a function f(x,y) }
+\begin{itemize}   
+\item[Inputs:] domain boundaries xmin,xmax,ymin,ymax\\
+  image size N,M\\
+  name of function f
+\item[Output:] image J such that J(i,j) = f(i,j) 
+\end{itemize}   
+
+\subsubsection{Calculate the histogram of an image}
+\begin{itemize}   
+\item[Inputs:] image I\\
+  number of bins B
+\item[Output:] a list of B bin-centers\\
+  a list of B pixel counts belonging to each bin
+\end{itemize}   
+
+\subsubsection{Subsample an image} 
+\begin{itemize}     \item[Input:] image I
+\item[Output:] image J such that J(i,j) = I(2*i,2*j)
+\end{itemize}
+
+\subsection{Intermediate}
+
+\subsubsection{Convolve an image with a mask}
+\url{http://en.wikipedia.org/wiki/Kernel_%28image_processing%29}
+
+  \subsubsection{Compute 1D FFT of an image (in x or in y direction)}
+  use fftw package
+
+  \subsubsection{Compute 2D FFT of an image}
+  \url{https://ia700307.us.archive.org/7/items/Lectures_on_Image_Processing/EECE253_06_FourierTransform.pdf}
+
+  \subsubsection{Convolve an image with a Gaussian, by FFT}
+  \url{https://ia700307.us.archive.org/7/items/Lectures_on_Image_Processing/EECE253_08_FrequencyFiltering.pdf}
+
+  \subsubsection{Compute the gradient of an image (in x or in y direction)}
+  \url{http://en.wikipedia.org/wiki/Image_gradient}
+
+  \subsubsection{Compute the Laplacian of an image}
+  \url{http://en.wikipedia.org/wiki/Discrete_Laplace_operator}
+
+  \subsubsection{Filter the image with a Gaussian filter}
+  \url{http://en.wikipedia.org/wiki/Gaussian_blur}
+
+  \subsection{Advanced processing}
+
+  \subsubsection{Compute the contours of an image}
+  by using a Gaussian filter + a Laplacian filter
+
+  \subsubsection{Subsample an image while avoiding aliasing}
+  by preprocessing with a Gaussian filter, see   \url{https://ia600307.us.archive.org/7/items/Lectures_on_Image_Processing/EECE253_11_SamplingAliasing.pdf}
+
+  \subsubsection{Compute the median filter of an image}
+  \url{https://archive.org/download/Lectures_on_Image_Processing/EECE253_16_MedianFilters.pdf}
+
+\end{document}
