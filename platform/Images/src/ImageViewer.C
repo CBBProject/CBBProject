@@ -44,7 +44,7 @@
 #include <Image.H>
 #include <Images/Maps.H>
 
-#include <ImageViewer.H>
+#include <Images/ImageViewer.H>
 
 ImageViewer::ImageViewer() {
 
@@ -65,58 +65,70 @@ ImageViewer::ImageViewer() {
     resize(500, 400);
 }
 
+bool ImageViewer::open(const Images::Image* image) {
+
+    std::cerr << (void*) image << "HERE !!! " << image->dimension() << std::endl;
+    if (!image || image->dimension()!=2)
+        return false;
+
+    std::cerr << "HERE !!!" << std::endl;
+    using namespace Images;
+    using namespace Images::Pixels;
+
+    typedef RGB<unsigned char> RGBPixel;
+    typedef Polymorphic::MultiDim<2> Images2D;
+    typedef Images2D::MultiType<float,Images2D::MultiType<double,Images2D::MultiType<unsigned char,Images2D::MultiType<unsigned> > > > Scalar2D;
+    typedef Images2D::MultiType<RGBPixel,Scalar2D> Accepted;
+
+    typedef RGB<double>        RGBDouble;
+    Accepted::Converter<RGBDouble> convert;
+    const Image2D<RGBDouble>& im = convert(image);
+
+    const IntensityMap<RGBDouble> map(im);
+    QImage qim(im.dimx(),im.dimy(),QImage::Format_RGB888);
+    const Image2D<RGBDouble>::Shape& shape = im.shape();
+    for (typename Image2D<RGBDouble>::Shape::const_iterator i=shape.begin();i!=shape.end();++i) {
+        RGBPixel pix = map(im(i));
+        qim.setPixel(i(1),i(2),(pix.red() << 8 | pix.green()) << 8 | pix.blue());
+    }
+
+    imageLabel->setPixmap(QPixmap::fromImage(qim));
+    scaleFactor = 1.0;
+
+    printAct->setEnabled(true);
+    fitToWindowAct->setEnabled(true);
+    updateActions();
+
+    if (!fitToWindowAct->isChecked())
+        imageLabel->adjustSize();
+
+    return true;
+}
+
+bool ImageViewer::open(const char* filename) {
+
+    Images::Image* image;
+
+    std::ifstream ifs(filename,std::ios::binary);
+
+    try {
+        ifs >> image;
+
+    } catch(...) {
+        QMessageBox::information(this, tr("Image Viewer"),
+                                 tr("Cannot load %1.").arg(filename));
+        return false;
+    }
+
+    return open(image);
+}
+
 void ImageViewer::open() {
 
-    QString fileName = QFileDialog::getOpenFileName(this,
+    QString filename = QFileDialog::getOpenFileName(this,
                                     tr("Open File"), QDir::currentPath());
-    if (!fileName.isEmpty()) {
-
-        Images::Image* image;
-
-        std::ifstream ifs(fileName.toAscii(),std::ios::binary);
-
-        try {
-            ifs >> image;
-
-        } catch(...) {
-            QMessageBox::information(this, tr("Image Viewer"),
-                                     tr("Cannot load %1.").arg(fileName));
-            return;
-        }
-
-        if (!image || image->dimension()!=2)
-            return;
-
-        using namespace Images;
-        using namespace Images::Pixels;
-
-        typedef RGB<unsigned char> RGBPixel;
-        typedef Polymorphic::MultiDim<2> Images2D;
-        typedef Images2D::MultiType<float,Images2D::MultiType<double,Images2D::MultiType<unsigned char,Images2D::MultiType<unsigned> > > > Scalar2D;
-        typedef Images2D::MultiType<RGBPixel,Scalar2D> Accepted;
-
-        typedef RGB<double>        RGBDouble;
-        Accepted::Converter<RGBDouble> convert;
-        const Image2D<RGBDouble>& im = convert(image);
-
-        const IntensityMap<RGBDouble> map(im);
-        QImage qim(im.dimx(),im.dimy(),QImage::Format_RGB888);
-        const Image2D<RGBDouble>::Shape& shape = im.shape();
-        for (typename Image2D<RGBDouble>::Shape::const_iterator i=shape.begin();i!=shape.end();++i) {
-            RGBPixel pix = map(im(i));
-            qim.setPixel(i(1),i(2),(pix.red() << 8 | pix.green()) << 8 | pix.blue());
-        }
-
-        imageLabel->setPixmap(QPixmap::fromImage(qim));
-        scaleFactor = 1.0;
-
-        printAct->setEnabled(true);
-        fitToWindowAct->setEnabled(true);
-        updateActions();
-
-        if (!fitToWindowAct->isChecked())
-            imageLabel->adjustSize();
-    }
+    if (!filename.isEmpty())
+        open(filename.toAscii());
 }
 
 void ImageViewer::print() {

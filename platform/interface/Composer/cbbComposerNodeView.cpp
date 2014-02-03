@@ -12,43 +12,24 @@
 #include <dtkMath/dtkVector.h>
 
 // /////////////////////////////////////////////////////////////////
-// cbbComposerNodeViewPrivate declaration
-// /////////////////////////////////////////////////////////////////
-
-class cbbComposerNodeViewPrivate {
-public:
-
-    cbbView *view;
-
-    dtkComposerTransmitterReceiver<cbbAbstractImage> receiver_image;
-};
-
-// /////////////////////////////////////////////////////////////////
 // cbbComposerNodeView implementation
 // /////////////////////////////////////////////////////////////////
 
-cbbComposerNodeView::cbbComposerNodeView(): dtkComposerNodeLeafView() {\
-  d = new cbbComposerNodeViewPrivate;
-  d->view = 0;
-  appendReceiver(&(d->receiver_image));
-}
-
-cbbComposerNodeView::~cbbComposerNodeView() {
-    delete d;
-    d = NULL;
+cbbComposerNodeView::cbbComposerNodeView(): dtkComposerNodeLeafView(),view(0) {
+    appendReceiver(&(receiver_image));
 }
 
 void cbbComposerNodeView::run() {
 
-  qDebug() << Q_FUNC_INFO;
+    qDebug() << Q_FUNC_INFO;
 
-  if(!d->view)
-    d->view = dynamic_cast<cbbView *>(dtkAbstractViewFactory::instance()->create("cbbView"));
+    if (!view)
+        view = dynamic_cast<cbbView*>(dtkAbstractViewFactory::instance()->create("cbbView"));
 
-  foreach(cbbAbstractImage *image, d->receiver_image.allData())
-    d->view->addImage(image);
+    foreach (cbbAbstractImage* image,receiver_image.allData())
+        view->addImage(image);
 
-  d->view->widget()->show();
+    view->widget()->show();
 }
 
 QString cbbComposerNodeView::type() {
@@ -61,10 +42,10 @@ QString cbbComposerNodeView::titleHint() {
 
 QString cbbComposerNodeView::inputLabelHint(const int port) {
     switch(port) {
-    case 0:
-        return "image";
-    default:
-        return dtkComposerNodeLeaf::inputLabelHint(port);
+        case 0:
+            return "image";
+        default:
+            return dtkComposerNodeLeaf::inputLabelHint(port);
     }
 }
 

@@ -1,3 +1,5 @@
+//  Modifications @INRIA
+
 /****************************************************************************
  **
  ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
@@ -49,6 +51,10 @@ class QMenu;
 class QScrollArea;
 class QScrollBar;
 
+namespace Images {
+    class Image;
+}
+
 class ImageViewer: public QMainWindow {
 
     Q_OBJECT
@@ -56,6 +62,8 @@ class ImageViewer: public QMainWindow {
 public:
 
     ImageViewer();
+    bool open(const char* filename);
+    bool open(const Images::Image* image);
 
 private slots:
 

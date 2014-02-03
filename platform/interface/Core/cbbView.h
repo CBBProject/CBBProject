@@ -1,28 +1,30 @@
 #pragma once
 
 #include <cbbExport.h>
-
 #include <dtkCore/dtkAbstractView.h>
+#include <Images/ImageViewer.H>
 
 class cbbAbstractImage;
-class cbbViewPrivate;
 
 class CBB_WINDOWS_EXPORT cbbView: public dtkAbstractView {
+
     Q_OBJECT
 
 public:
-             cbbView();
-    virtual ~cbbView() { }
 
-    void addImage(cbbAbstractImage *image);
+    cbbView(): imageViewer(new ImageViewer) { }
+    virtual ~cbbView() { delete imageViewer; }
 
-    QWidget *widget();
+    void addImage(const cbbAbstractImage* image);
+
+    QWidget* widget() { return imageViewer; }
 
     static dtkAbstractView* create() { return new cbbView; }
 
 private:
-    DTK_DECLARE_PRIVATE(cbbView);
+    
+    ImageViewer* imageViewer;
 };
 
 Q_DECLARE_METATYPE(cbbView)
-Q_DECLARE_METATYPE(cbbView *)
+Q_DECLARE_METATYPE(cbbView*)

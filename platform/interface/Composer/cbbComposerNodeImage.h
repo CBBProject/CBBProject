@@ -3,14 +3,16 @@
 #include <QtCore>
 
 #include <cbbExport.h>
+#include <Core/cbbAbstractImage.h>
 #include <dtkComposer/dtkComposerNodeLeaf.h>
-
-class cbbComposerNodeImagePrivate;
+#include <dtkComposer/dtkComposerTransmitterEmitter.h>
+#include <dtkComposer/dtkComposerTransmitterReceiver.h>
 
 class CBB_WINDOWS_EXPORT cbbComposerNodeImage: public dtkComposerNodeLeaf {
 public:
+
      cbbComposerNodeImage();
-    ~cbbComposerNodeImage();
+    ~cbbComposerNodeImage() { }
 
     void run();
 
@@ -21,5 +23,9 @@ public:
     QString outputLabelHint(const int port);
 
 private:
-    cbbComposerNodeImagePrivate* d;
+
+    cbbAbstractImage* image;
+
+    dtkComposerTransmitterReceiver<QString>         receiver_string;
+    dtkComposerTransmitterEmitter<cbbAbstractImage> emitter_image;
 };

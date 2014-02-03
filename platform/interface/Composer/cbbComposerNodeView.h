@@ -4,13 +4,14 @@
 
 #include <cbbExport.h>
 #include <dtkComposer/dtkComposerNodeLeafView.h>
-
-class cbbComposerNodeViewPrivate;
+#include <Core/cbbView.h>
+#include <dtkComposer/dtkComposerTransmitterReceiver.h>
 
 class CBB_WINDOWS_EXPORT cbbComposerNodeView : public dtkComposerNodeLeafView {
 public:
+
      cbbComposerNodeView();
-    ~cbbComposerNodeView();
+    ~cbbComposerNodeView() { }
 
     void run();
 
@@ -24,5 +25,8 @@ public:
     virtual QString abstractViewType() const { return QString("view"); }
 
 private:
-    cbbComposerNodeViewPrivate *d;
+
+    cbbView* view;
+
+    dtkComposerTransmitterReceiver<cbbAbstractImage> receiver_image;
 };
