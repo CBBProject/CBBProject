@@ -32,8 +32,6 @@ void cbbComposerNodeImage::run() {
     }
 
     emitter_image.setData(image);
-
-    qDebug() << Q_FUNC_INFO << "Done" << 2;
 }
 
 QString cbbComposerNodeImage::inputLabelHint(const int port) {

@@ -67,11 +67,9 @@ ImageViewer::ImageViewer() {
 
 bool ImageViewer::open(const Images::Image* image) {
 
-    std::cerr << (void*) image << "HERE !!! " << image->dimension() << std::endl;
     if (!image || image->dimension()!=2)
         return false;
 
-    std::cerr << "HERE !!!" << std::endl;
     using namespace Images;
     using namespace Images::Pixels;
 
