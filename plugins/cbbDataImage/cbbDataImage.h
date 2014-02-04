@@ -35,7 +35,8 @@ public:
         setImage(image_name);
     }
 
-    void* data() { std::cerr << "Getting the image !!" << std::endl; return image_; }
+    Images::Image* image() const { std::cerr << "Getting the image !!" << std::endl; return image_; }
+    void* data()  { std::cerr << "Getting the image !!" << std::endl; return image_; }
 
 private:
 
