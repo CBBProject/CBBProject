@@ -83,25 +83,25 @@ private:
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
 
-    QLabel *imageLabel;
-    QScrollArea *scrollArea;
-    double scaleFactor;
+    QLabel*      imageLabel;
+    QScrollArea* scrollArea;
+    double       scaleFactor;
 
     #ifndef QT_NO_PRINTER
     QPrinter printer;
     #endif
 
-    QAction *openAct;
-    QAction *printAct;
-    QAction *exitAct;
-    QAction *zoomInAct;
-    QAction *zoomOutAct;
-    QAction *normalSizeAct;
-    QAction *fitToWindowAct;
-    QAction *aboutAct;
-    QAction *aboutQtAct;
+    QAction* openAct;
+    QAction* printAct;
+    QAction* exitAct;
+    QAction* zoomInAct;
+    QAction* zoomOutAct;
+    QAction* normalSizeAct;
+    QAction* fitToWindowAct;
+    QAction* aboutAct;
+    QAction* aboutQtAct;
 
-    QMenu *fileMenu;
-    QMenu *viewMenu;
-    QMenu *helpMenu;
+    QMenu* fileMenu;
+    QMenu* viewMenu;
+    QMenu* helpMenu;
 };
