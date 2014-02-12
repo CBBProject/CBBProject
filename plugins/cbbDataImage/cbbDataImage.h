@@ -14,8 +14,6 @@ public:
     cbbDataImage();
     virtual ~cbbDataImage();
 
-public:
-
     virtual QString description() const { return "Image data"; }
     virtual QString identifier()  const { return id;           }
 
